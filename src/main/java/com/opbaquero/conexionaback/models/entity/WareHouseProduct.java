@@ -21,12 +21,12 @@ public class WareHouseProduct implements Serializable {
 
     @JoinColumn(name = "warehouse_id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private Warehouse warehouse;
 
     @JoinColumn(name = "product_id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private Products product;
 
     private int stock;

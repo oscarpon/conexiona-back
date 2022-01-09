@@ -65,6 +65,20 @@ public class WharehouseProductRestController {
         return wareHouseProductService.findByWareHouse(warehouse);
     }
 
+    @DeleteMapping("/delete/{warehouseProductId}")
+    public ResponseEntity<?> delete(@PathVariable (value = "warehouseProductId") UUID warehouseProductId){
+        Map<String, Object> response = new HashMap<>();
+        try{
+            wareHouseProductService.delete(warehouseProductId);
+        }catch(DataAccessException e){
+            response.put("message", "Error deleting from database");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+        }
+        response.put("message", "Deleted");
+        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+    }
+
 
 
 }

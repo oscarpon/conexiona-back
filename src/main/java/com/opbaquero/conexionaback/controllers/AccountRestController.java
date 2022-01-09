@@ -46,14 +46,13 @@ public class AccountRestController {
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> create(@RequestBody Account account){
-        Account newAccount = null;
         Map<String, Object> response = new HashMap<>();
         if(accountService.existsByAccountName(account.accountName)){
             response.put("error", "Account name already exists");
             return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
         }
         try{
-            newAccount = accountService.save(account);
+            accountService.save(account);
         }catch (DataAccessException e){
             response.put("error", "Impossible ad account to database");
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
