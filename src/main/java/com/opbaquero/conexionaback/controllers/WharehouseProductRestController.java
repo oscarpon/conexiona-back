@@ -3,6 +3,7 @@ package com.opbaquero.conexionaback.controllers;
 import com.opbaquero.conexionaback.models.entity.Products;
 import com.opbaquero.conexionaback.models.entity.WareHouseProduct;
 import com.opbaquero.conexionaback.models.entity.Warehouse;
+import com.opbaquero.conexionaback.models.exceptions.ProductAlreadyInWarehouseException;
 import com.opbaquero.conexionaback.models.service.dto.WarehouseProductDTO;
 import com.opbaquero.conexionaback.models.service.impl.WareHouseServiceImpl;
 import com.opbaquero.conexionaback.models.service.interfaces.IProductService;
@@ -38,8 +39,8 @@ public class WharehouseProductRestController {
         return wareHouseProductService.findOne(wareHouseProductId);
     }
 
-    @PostMapping("/add/{wareHouseId}")
-    public ResponseEntity addWarehousProduct(@PathVariable (value = "wareHouseId") UUID wareHouseId, @RequestBody WarehouseProductDTO warehouseProductDTO){
+    @PostMapping("/add")
+    public ResponseEntity addWarehousProduct(@RequestBody WarehouseProductDTO warehouseProductDTO){
         Map<String, Object> response = new HashMap<>();
         try{
             WareHouseProduct wareHouseProduct = new WareHouseProduct();
@@ -49,8 +50,8 @@ public class WharehouseProductRestController {
             wareHouseProduct.setWarehouse(warehouse1);
             wareHouseProduct.setStock(warehouseProductDTO.getStock());
             wareHouseProductService.save(wareHouseProduct);
-        }catch (DataAccessException e){
-            response.put("Error", "You can't add a product");
+        }catch (DataAccessException | ProductAlreadyInWarehouseException e){
+            response.put("error", e.getMessage());
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         response.put("Message", "Product added");

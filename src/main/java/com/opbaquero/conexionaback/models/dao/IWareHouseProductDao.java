@@ -18,4 +18,7 @@ public interface IWareHouseProductDao extends JpaRepository<WareHouseProduct, UU
 
     void deleteById(UUID id);
 
+    @Query("select wp.id from WareHouseProduct wp where wp.warehouse.id = ?1 and wp.product.id = ?2")
+    UUID findWareHouseProductByWareHouseAndProduct(UUID warehouseId, UUID productId);
+
 }
