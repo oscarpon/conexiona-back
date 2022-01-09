@@ -17,6 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -57,5 +58,13 @@ public class WharehouseProductRestController {
         response.put("Message", "Product added");
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
     }
+
+    @GetMapping("/get-products/warehouse-id/{wareHouseId}")
+    public List<WareHouseProduct> listProductsInWareHouse(@PathVariable(value = "wareHouseId") UUID wareHouseId){
+        Warehouse warehouse = this.wareHouseService.findOne(wareHouseId);
+        return wareHouseProductService.findByWareHouse(warehouse);
+    }
+
+
 
 }
