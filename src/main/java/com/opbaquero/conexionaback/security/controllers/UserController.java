@@ -2,6 +2,7 @@ package com.opbaquero.conexionaback.security.controllers;
 
 import com.opbaquero.conexionaback.models.entity.Account;
 import com.opbaquero.conexionaback.models.service.interfaces.IAccountService;
+import com.opbaquero.conexionaback.models.service.interfaces.IEmailService;
 import com.opbaquero.conexionaback.security.dto.JwtDto;
 import com.opbaquero.conexionaback.security.dto.UserLogin;
 import com.opbaquero.conexionaback.security.dto.NewUser;
@@ -52,6 +53,9 @@ public class UserController {
 
     @Autowired
     JwtProvider jwtProvider;
+
+    @Autowired
+    IEmailService emailService;
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")

@@ -28,11 +28,11 @@ public class EmailServiceImpl implements IEmailService {
 
 
     @Override
-    public void sendMail() {
+    public void sendMail(String email) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("KanbanSense");
-        message.setTo("jenycasalv@gmail.com");
-        message.setSubject("");
+        message.setFrom("oscarponte97@gmail.com");
+        message.setTo(email);
+        message.setSubject("Usuario kanbansense");
         message.setText("Esto es el contenido del email");
 
         javaMailSender.send(message);
