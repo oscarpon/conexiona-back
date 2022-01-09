@@ -9,6 +9,7 @@ import com.opbaquero.conexionaback.models.service.impl.WareHouseServiceImpl;
 import com.opbaquero.conexionaback.models.service.interfaces.IProductService;
 import com.opbaquero.conexionaback.models.service.interfaces.IWareHouseProductService;
 import com.opbaquero.conexionaback.models.service.interfaces.IWareHouseService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -77,6 +78,22 @@ public class WharehouseProductRestController {
         }
         response.put("message", "Deleted");
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+    }
+
+    @PutMapping("/update-stock")
+    public ResponseEntity<?> updateStock(@RequestBody WarehouseProductDTO warehouseProductDTO){
+        WareHouseProduct currentWareHouseProduct = wareHouseProductService.findWareHouseProductByIds(warehouseProductDTO.getWarehouse(), warehouseProductDTO.getProduct());
+        WareHouseProduct updated = new WareHouseProduct();
+        Map<String, Object> response = new HashMap<>();
+        if(currentWareHouseProduct == null){
+            response.put("message", "Product not found in database");
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+        }
+        currentWareHouseProduct.setStock(warehouseProductDTO.getStock());
+        wareHouseProductService.update(currentWareHouseProduct);
+
+        response.put("message", "Product updated succesfully");
+        return new ResponseEntity<Map<String,Object>>(response, HttpStatus.CREATED);
     }
 
 

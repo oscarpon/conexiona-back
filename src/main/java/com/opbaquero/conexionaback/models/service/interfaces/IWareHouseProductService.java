@@ -19,6 +19,8 @@ public interface IWareHouseProductService {
 
     List<WareHouseProduct> findByWareHouse(Warehouse warehouse);
 
-    UUID findWareHouseProductByIds(UUID wareHouseProduct, UUID productId);
+    WareHouseProduct findWareHouseProductByIds(UUID wareHouseProduct, UUID productId);
+
+    void update(WareHouseProduct wareHouseProduct);
 
 }
