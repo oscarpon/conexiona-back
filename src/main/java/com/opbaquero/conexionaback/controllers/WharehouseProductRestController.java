@@ -3,6 +3,7 @@ package com.opbaquero.conexionaback.controllers;
 import com.opbaquero.conexionaback.models.entity.Products;
 import com.opbaquero.conexionaback.models.entity.WareHouseProduct;
 import com.opbaquero.conexionaback.models.entity.Warehouse;
+import com.opbaquero.conexionaback.models.service.dto.WarehouseProductDTO;
 import com.opbaquero.conexionaback.models.service.impl.WareHouseServiceImpl;
 import com.opbaquero.conexionaback.models.service.interfaces.IProductService;
 import com.opbaquero.conexionaback.models.service.interfaces.IWareHouseProductService;
@@ -38,15 +39,15 @@ public class WharehouseProductRestController {
     }
 
     @PostMapping("/add/{wareHouseId}")
-    public ResponseEntity addWarehousProduct(@PathVariable (value = "wareHouseId") UUID wareHouseId, @RequestBody WareHouseProduct reqwareHouseProduct){
+    public ResponseEntity addWarehousProduct(@PathVariable (value = "wareHouseId") UUID wareHouseId, @RequestBody WarehouseProductDTO warehouseProductDTO){
         Map<String, Object> response = new HashMap<>();
         try{
-            Products product = this.productService.findOne(reqwareHouseProduct.getProducts().getId());
-            Warehouse warehouse = this.wareHouseService.findOne(wareHouseId);
             WareHouseProduct wareHouseProduct = new WareHouseProduct();
-            wareHouseProduct.setProducts(product);
-            wareHouseProduct.setWarehouse(warehouse);
-            wareHouseProduct.setStock(reqwareHouseProduct.getStock());
+            Products product1 = this.productService.findOne(warehouseProductDTO.getProduct());
+            Warehouse warehouse1 = this.wareHouseService.findOne(warehouseProductDTO.getWarehouse());
+            wareHouseProduct.setProducts(product1);
+            wareHouseProduct.setWarehouse(warehouse1);
+            wareHouseProduct.setStock(warehouseProductDTO.getStock());
             wareHouseProductService.save(wareHouseProduct);
         }catch (DataAccessException e){
             response.put("Error", "You can't add a product");

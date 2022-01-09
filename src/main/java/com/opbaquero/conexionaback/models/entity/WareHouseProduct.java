@@ -16,7 +16,7 @@ public class WareHouseProduct implements Serializable {
 
     @Id
     @GeneratedValue
-    @Type(type="org.hibernate.type.UUIDCharType")
+    @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID id;
 
     @JoinColumn(name = "warehouse_id", nullable = false)
@@ -26,7 +26,7 @@ public class WareHouseProduct implements Serializable {
 
     @JoinColumn(name = "product_id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private Products product;
 
     private int stock;
