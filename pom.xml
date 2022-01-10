@@ -15,6 +15,7 @@
 	<description>Project for conexiona telecom</description>
 	<properties>
 		<java.version>8</java.version>
+		<start-class>com.opbaquero.conexionaback.ConexionaBackApplication</start-class>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -85,7 +86,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.opbaquero.conexionaback</mainClass>
+					<mainClass>com.opbaquero.conexionaback.ConexionaBackApplication</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>
