@@ -27,6 +27,7 @@ public class ReplacementServiceImpl implements IReplacementService {
     }
 
     @Override
+    @Transactional
     public Replacement save(Replacement replacement) {
         return replacementDao.save(replacement);
     }

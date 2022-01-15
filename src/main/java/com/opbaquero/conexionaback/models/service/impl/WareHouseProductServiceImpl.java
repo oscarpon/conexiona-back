@@ -48,8 +48,8 @@ public class WareHouseProductServiceImpl implements IWareHouseProductService {
     }
 
     @Override
-    public WareHouseProduct findWareHouseProductByIds(UUID wareHouseProduct, UUID productId) {
-        return wareHouseProductDao.findWareHouseProductByWareHouseAndProduct(wareHouseProduct, productId);
+    public WareHouseProduct findWareHouseProductByIds(UUID wareHouse, UUID productId) {
+        return wareHouseProductDao.findWareHouseProductByWareHouseAndProduct(wareHouse, productId);
     }
 
     @Override
