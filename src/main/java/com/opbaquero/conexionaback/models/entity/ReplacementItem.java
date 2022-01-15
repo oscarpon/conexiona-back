@@ -44,4 +44,9 @@ public class ReplacementItem implements Serializable {
     public void setProduct(WareHouseProduct product) {
         this.product = product;
     }
+
+    public Integer calculateFinalStock(){
+        return quantityReplaced + product.getStock();
+    }
+
 }

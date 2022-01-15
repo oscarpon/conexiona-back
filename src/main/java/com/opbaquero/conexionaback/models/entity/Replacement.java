@@ -1,10 +1,12 @@
 package com.opbaquero.conexionaback.models.entity;
 
 import com.opbaquero.conexionaback.security.entity.User;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +21,7 @@ public class Replacement implements Serializable {
     @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID id;
 
+    @CreationTimestamp
     @Temporal(TemporalType.DATE)
     private Date date;
 
