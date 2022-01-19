@@ -2,6 +2,7 @@ package com.opbaquero.conexionaback.models.dao;
 
 import com.opbaquero.conexionaback.models.entity.Replacement;
 import com.opbaquero.conexionaback.models.entity.Warehouse;
+import com.opbaquero.conexionaback.models.service.dto.ReplacementDataExportDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -13,8 +14,18 @@ import java.util.UUID;
 public interface IReplacementDao extends JpaRepository<Replacement, UUID> {
 
     @Query("select r from Replacement r join fetch r.user u join fetch r.replacementItems l join fetch l.product where r.id=?1")
-    public Replacement fetchByIdWithUserWithReplacementItemWithProducts(UUID id);
+    Replacement fetchByIdWithUserWithReplacementItemWithProducts(UUID id);
 
     List<Replacement> findByWarehouse(Warehouse warehouse);
+
+    @Query("SELECT NEW com.opbaquero.conexionaback.models.service.dto.ReplacementDataExportDTO(r.date, u.userName, w.wareHouseName, b.buildingName, h.hospitalName, a.accountName) " +
+            "FROM Replacement r " +
+            "INNER JOIN r.user u " +
+            "INNER JOIN r.warehouse w " +
+            "INNER JOIN w.building b " +
+            "INNER JOIN b.hospital h " +
+            "INNER JOIN h.account a " +
+            "WHERE a.id=?1 ORDER BY r.date" )
+    List<ReplacementDataExportDTO> findDataRepositionByAccount(UUID id);
 
 }
