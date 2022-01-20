@@ -7,6 +7,7 @@ import com.opbaquero.conexionaback.models.service.dto.ReplacementItemDTO;
 import com.opbaquero.conexionaback.models.service.interfaces.*;
 import com.opbaquero.conexionaback.security.entity.User;
 import com.opbaquero.conexionaback.security.service.UserService;
+import com.opbaquero.conexionaback.utils.ReplacementExporterExcel;
 import com.opbaquero.conexionaback.utils.ReplacementExporterPdf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -63,6 +64,21 @@ public class ReplacementRestController {
 
         ReplacementExporterPdf export = new ReplacementExporterPdf(listData);
         export.exportDocument(response);
+    }
+
+    @GetMapping("/export-data/excel/{id}")
+    public void exportToExcelData(@PathVariable(value = "id")UUID id, HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String now = dateFormat.format(new Date());
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachement; filename=data_" + now + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+
+        List<ReplacementDataExportDTO> listData = replacementService.findDataRepositionByAccount(id);
+
+        ReplacementExporterExcel export = new ReplacementExporterExcel(listData);
+        export.export(response);
     }
 
     @GetMapping("/detail/{id}")

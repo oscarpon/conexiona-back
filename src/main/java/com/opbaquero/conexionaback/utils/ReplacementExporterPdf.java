@@ -10,6 +10,9 @@ import com.opbaquero.conexionaback.models.service.dto.ReplacementDataExportDTO;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class ReplacementExporterPdf {
@@ -55,7 +58,7 @@ public class ReplacementExporterPdf {
     }
 
     public void exportDocument(HttpServletResponse response) throws IOException {
-        Document document = new Document(PageSize.A4);
+        Document document = new Document(PageSize.A4.rotate());
         PdfWriter.getInstance(document, response.getOutputStream());
 
         document.open();
@@ -68,14 +71,17 @@ public class ReplacementExporterPdf {
 
         document.add(paragraph);
 
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        String now = dateFormat.format(new Date());
+
         Font fontDate = FontFactory.getFont(FontFactory.COURIER);
-        font.setSize(8);
-        font.setColor(Color.BLACK);
+        fontDate.setSize(8);
+        fontDate.setColor(Color.BLACK);
 
-        Paragraph paragraphDate = new Paragraph("Historial de reposiciones:", font);
-        paragraph.setAlignment(Paragraph.ALIGN_RIGHT);
+        Paragraph paragraphDate = new Paragraph(now, fontDate);
+        paragraphDate.setAlignment(Paragraph.ALIGN_RIGHT);
 
-        document.add(paragraph);
+        document.add(paragraphDate);
 
         PdfPTable table = new PdfPTable(6);
         table.setWidthPercentage(100f);
