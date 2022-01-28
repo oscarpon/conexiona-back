@@ -10,6 +10,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -22,7 +23,8 @@ public class EmailServiceImpl implements IEmailService {
     @Autowired
     JavaMailSender javaMailSender;
 
-    TemplateEngine templateEngine;
+    @Autowired
+    private SpringTemplateEngine templateEngine;
 
     private String url;
 
