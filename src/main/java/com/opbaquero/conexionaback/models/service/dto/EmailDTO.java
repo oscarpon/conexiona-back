@@ -6,16 +6,18 @@ public class EmailDTO {
     private String to;
     private String subject;
     private String userName;
+    private String newPassword;
 
     public EmailDTO(){
 
     }
 
-    public EmailDTO(String from, String to, String subject, String userName) {
+    public EmailDTO(String from, String to, String subject, String userName, String newPassword) {
         this.from = from;
         this.to = to;
         this.subject = subject;
         this.userName = userName;
+        this.newPassword = newPassword;
     }
 
     public String getFrom() {
@@ -48,5 +50,13 @@ public class EmailDTO {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
     }
 }

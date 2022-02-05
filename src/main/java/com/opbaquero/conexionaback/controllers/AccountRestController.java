@@ -1,8 +1,6 @@
 package com.opbaquero.conexionaback.controllers;
 
 import com.opbaquero.conexionaback.models.entity.Account;
-import com.opbaquero.conexionaback.models.service.dto.EmailDTO;
-import com.opbaquero.conexionaback.models.service.impl.EmailServiceImpl;
 import com.opbaquero.conexionaback.models.service.interfaces.IAccountService;
 import com.opbaquero.conexionaback.models.service.interfaces.IEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +21,9 @@ import java.util.UUID;
 public class AccountRestController {
     @Autowired
     public IAccountService accountService;
+
+    @Autowired
+    public IEmailService emailService;
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")

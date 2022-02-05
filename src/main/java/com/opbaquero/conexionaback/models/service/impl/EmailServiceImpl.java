@@ -10,6 +10,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -22,7 +23,8 @@ public class EmailServiceImpl implements IEmailService {
     @Autowired
     JavaMailSender javaMailSender;
 
-    TemplateEngine templateEngine;
+    @Autowired
+    private SpringTemplateEngine templateEngine;
 
     private String url;
 
@@ -46,8 +48,9 @@ public class EmailServiceImpl implements IEmailService {
             Context context = new Context();
             Map<String, Object> model = new HashMap<>();
             model.put("userName", dto.getUserName());
+            model.put("newPassword", dto.getNewPassword());
             context.setVariables(model);
-            String htmlText = templateEngine.process("newUser", context);
+            String htmlText = templateEngine.process("forgot-password", context);
             helper.setFrom(dto.getFrom());
             helper.setTo(dto.getTo());
             helper.setSubject(dto.getSubject());

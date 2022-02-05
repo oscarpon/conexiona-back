@@ -2,17 +2,24 @@ package com.opbaquero.conexionaback.controllers;
 
 import com.opbaquero.conexionaback.models.entity.*;
 import com.opbaquero.conexionaback.models.service.dto.ReplacementDTO;
+import com.opbaquero.conexionaback.models.service.dto.ReplacementDataExportDTO;
 import com.opbaquero.conexionaback.models.service.dto.ReplacementItemDTO;
 import com.opbaquero.conexionaback.models.service.interfaces.*;
 import com.opbaquero.conexionaback.security.entity.User;
 import com.opbaquero.conexionaback.security.service.UserService;
+import com.opbaquero.conexionaback.utils.ReplacementExporterExcel;
+import com.opbaquero.conexionaback.utils.ReplacementExporterPdf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -38,6 +45,41 @@ public class ReplacementRestController {
 
     @Autowired
     private IProductService productService;
+
+    @GetMapping("/export-data/{id}")
+    public List<ReplacementDataExportDTO> exportData(@PathVariable(value = "id")UUID id){
+        return replacementService.findDataRepositionByAccount(id);
+    }
+
+    @GetMapping("/export-data/pdf/{id}")
+    public void exportToPdfData(@PathVariable(value = "id")UUID id, HttpServletResponse response) throws IOException {
+        response.setContentType("application/pdf");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String now = dateFormat.format(new Date());
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachement; filename=data_" + now + ".pdf";
+        response.setHeader(headerKey, headerValue);
+
+        List<ReplacementDataExportDTO> listData = replacementService.findDataRepositionByAccount(id);
+
+        ReplacementExporterPdf export = new ReplacementExporterPdf(listData);
+        export.exportDocument(response);
+    }
+
+    @GetMapping("/export-data/excel/{id}")
+    public void exportToExcelData(@PathVariable(value = "id")UUID id, HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String now = dateFormat.format(new Date());
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachement; filename=data_" + now + ".xlsx";
+        response.setHeader(headerKey, headerValue);
+
+        List<ReplacementDataExportDTO> listData = replacementService.findDataRepositionByAccount(id);
+
+        ReplacementExporterExcel export = new ReplacementExporterExcel(listData);
+        export.export(response);
+    }
 
     @GetMapping("/detail/{id}")
     public ResponseEntity<?> detail(@PathVariable(value = "id")UUID id){

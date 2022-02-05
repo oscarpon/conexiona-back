@@ -26,7 +26,7 @@ public class WareHouseProductServiceImpl implements IWareHouseProductService {
     @Override
     public WareHouseProduct save(WareHouseProduct wareHouseProduct) throws ProductAlreadyInWarehouseException {
         if(findWareHouseProductByIds(wareHouseProduct.getWarehouse().getId(), wareHouseProduct.getProducts().getId()) != null){
-            throw new ProductAlreadyInWarehouseException("El producto ya se encuentra en el almacén");
+            throw new ProductAlreadyInWarehouseException("El producto ya se encuentra en el almacén. Inicia una reposición.");
         }
         return wareHouseProductDao.save(wareHouseProduct);
     }
