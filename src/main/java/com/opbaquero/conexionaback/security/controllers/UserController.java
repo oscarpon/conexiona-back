@@ -176,10 +176,15 @@ public class UserController {
         emailDTO.setSubject("Nueva contraseña");
         byte[] array = new byte[8];
         new Random().nextBytes(array);
-        String newPassword = new String(array, Charset.forName("UTF-16"));
-        emailDTO.setNewPassword(newPassword);
+        StringBuilder newPassword = new StringBuilder();
+        String givenString = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890abcdefghijklmnñopqrstuvwxyz";
+        for(int i = 0; i < 12; i++){
+            int index = (int) (givenString.length() * Math.random());
+            newPassword.append(givenString.charAt(index));
+        }
+        emailDTO.setNewPassword(newPassword.toString());
         this.emailService.sendMailTemplate(emailDTO);
-        userService.changePassword(user, "12345");
+        userService.changePassword(user, newPassword.toString());
         response.put("message", "Email send");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
