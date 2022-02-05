@@ -48,8 +48,9 @@ public class EmailServiceImpl implements IEmailService {
             Context context = new Context();
             Map<String, Object> model = new HashMap<>();
             model.put("userName", dto.getUserName());
+            model.put("newPassword", dto.getNewPassword());
             context.setVariables(model);
-            String htmlText = templateEngine.process("newUser", context);
+            String htmlText = templateEngine.process("forgot-password", context);
             helper.setFrom(dto.getFrom());
             helper.setTo(dto.getTo());
             helper.setSubject(dto.getSubject());

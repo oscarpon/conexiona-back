@@ -1,8 +1,6 @@
 package com.opbaquero.conexionaback.controllers;
 
 import com.opbaquero.conexionaback.models.entity.Account;
-import com.opbaquero.conexionaback.models.service.dto.EmailDTO;
-import com.opbaquero.conexionaback.models.service.impl.EmailServiceImpl;
 import com.opbaquero.conexionaback.models.service.interfaces.IAccountService;
 import com.opbaquero.conexionaback.models.service.interfaces.IEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.Email;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,12 +28,6 @@ public class AccountRestController {
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<Account> index(){
-        EmailDTO emailDTO = new EmailDTO();
-        emailDTO.setTo("oscar.pontebaquero@gmail.com");
-        emailDTO.setFrom("oscarponte97@gmail.com");
-        emailDTO.setUserName("opbaquero");
-        emailDTO.setSubject("Prueba de envío de email");
-        this.emailService.sendMailTemplate(emailDTO);
         return accountService.findAll();
     }
 

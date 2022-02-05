@@ -1,6 +1,7 @@
 package com.opbaquero.conexionaback.security.controllers;
 
 import com.opbaquero.conexionaback.models.entity.Account;
+import com.opbaquero.conexionaback.models.service.dto.EmailDTO;
 import com.opbaquero.conexionaback.models.service.interfaces.IAccountService;
 import com.opbaquero.conexionaback.models.service.interfaces.IEmailService;
 import com.opbaquero.conexionaback.security.dto.JwtDto;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.util.*;
 
@@ -156,6 +158,30 @@ public class UserController {
         userService.changePassword(user, newpassword);
         response.put("message", "Password Updated");
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestParam("userEmail") String userEmail){
+        Map<String, Object> response = new HashMap<>();
+
+        User user = userService.findByEmail(userEmail);
+        if(user == null){
+            response.put("error", "No se encuentra un usuario con ese email");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+        EmailDTO emailDTO = new EmailDTO();
+        emailDTO.setTo(userEmail);
+        emailDTO.setFrom("oscarponte97@gmail.com");
+        emailDTO.setUserName(user.getUserName());
+        emailDTO.setSubject("Nueva contraseña");
+        byte[] array = new byte[8];
+        new Random().nextBytes(array);
+        String newPassword = new String(array, Charset.forName("UTF-16"));
+        emailDTO.setNewPassword(newPassword);
+        this.emailService.sendMailTemplate(emailDTO);
+        userService.changePassword(user, "12345");
+        response.put("message", "Email send");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PutMapping("/add/{userId}")
