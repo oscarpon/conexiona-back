@@ -160,7 +160,7 @@ public class UserController {
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/forgot-password")
+    @GetMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestParam("userEmail") String userEmail){
         Map<String, Object> response = new HashMap<>();
 
