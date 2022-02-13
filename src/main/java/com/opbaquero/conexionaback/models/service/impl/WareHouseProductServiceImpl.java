@@ -4,6 +4,7 @@ import com.opbaquero.conexionaback.models.dao.IWareHouseProductDao;
 import com.opbaquero.conexionaback.models.entity.WareHouseProduct;
 import com.opbaquero.conexionaback.models.entity.Warehouse;
 import com.opbaquero.conexionaback.models.exceptions.ProductAlreadyInWarehouseException;
+import com.opbaquero.conexionaback.models.service.dto.ActualStockDTO;
 import com.opbaquero.conexionaback.models.service.interfaces.IWareHouseProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,6 +56,11 @@ public class WareHouseProductServiceImpl implements IWareHouseProductService {
     @Override
     public void update(WareHouseProduct wareHouseProduct) {
         wareHouseProductDao.updateStock(wareHouseProduct.getWarehouse().getId(), wareHouseProduct.getProducts().getId(), wareHouseProduct.getStock());
+    }
+
+    @Override
+    public List<ActualStockDTO> findActualStockByWareHouse(UUID id){
+        return wareHouseProductDao.findActualStockByWareHouse(id);
     }
 
 

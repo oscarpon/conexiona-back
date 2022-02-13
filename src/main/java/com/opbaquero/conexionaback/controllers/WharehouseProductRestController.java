@@ -4,6 +4,7 @@ import com.opbaquero.conexionaback.models.entity.Products;
 import com.opbaquero.conexionaback.models.entity.WareHouseProduct;
 import com.opbaquero.conexionaback.models.entity.Warehouse;
 import com.opbaquero.conexionaback.models.exceptions.ProductAlreadyInWarehouseException;
+import com.opbaquero.conexionaback.models.service.dto.ActualStockDTO;
 import com.opbaquero.conexionaback.models.service.dto.WarehouseProductDTO;
 import com.opbaquero.conexionaback.models.service.impl.WareHouseServiceImpl;
 import com.opbaquero.conexionaback.models.service.interfaces.IProductService;
@@ -58,6 +59,11 @@ public class WharehouseProductRestController {
         }
         response.put("Message", "Product added");
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/stock/{wareHouseId}")
+    public List<ActualStockDTO> findStockByWarehouse(@PathVariable(value = "wareHouseId") UUID wareHouseId){
+        return wareHouseProductService.findActualStockByWareHouse(wareHouseId);
     }
 
     @GetMapping("/get-products/warehouse-id/{wareHouseId}")

@@ -2,6 +2,7 @@ package com.opbaquero.conexionaback.models.dao;
 
 import com.opbaquero.conexionaback.models.entity.WareHouseProduct;
 import com.opbaquero.conexionaback.models.entity.Warehouse;
+import com.opbaquero.conexionaback.models.service.dto.ActualStockDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -27,5 +28,12 @@ public interface IWareHouseProductDao extends JpaRepository<WareHouseProduct, UU
     @Transactional
     @Query("update WareHouseProduct wp set stock = ?3 where wp.warehouse.id = ?1 and wp.product.id = ?2")
     void updateStock(UUID warehouseId, UUID productId, Integer stock);
+
+    @Query("SELECT NEW com.opbaquero.conexionaback.models.service.dto.ActualStockDTO(w.wareHouseName, p.nameProduct, wp.stock) " +
+            "FROM WareHouseProduct wp " +
+            "INNER JOIN wp.warehouse w " +
+            "INNER JOIN wp.product p " +
+            "WHERE w.id=?1")
+    List<ActualStockDTO> findActualStockByWareHouse(UUID id);
 
 }

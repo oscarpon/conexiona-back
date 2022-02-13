@@ -3,6 +3,7 @@ package com.opbaquero.conexionaback.models.service.interfaces;
 import com.opbaquero.conexionaback.models.entity.WareHouseProduct;
 import com.opbaquero.conexionaback.models.entity.Warehouse;
 import com.opbaquero.conexionaback.models.exceptions.ProductAlreadyInWarehouseException;
+import com.opbaquero.conexionaback.models.service.dto.ActualStockDTO;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,5 +23,7 @@ public interface IWareHouseProductService {
     WareHouseProduct findWareHouseProductByIds(UUID wareHouseProduct, UUID productId);
 
     void update(WareHouseProduct wareHouseProduct);
+
+    List<ActualStockDTO> findActualStockByWareHouse(UUID id);
 
 }
