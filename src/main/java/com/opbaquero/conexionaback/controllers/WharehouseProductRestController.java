@@ -4,11 +4,15 @@ import com.opbaquero.conexionaback.models.entity.Products;
 import com.opbaquero.conexionaback.models.entity.WareHouseProduct;
 import com.opbaquero.conexionaback.models.entity.Warehouse;
 import com.opbaquero.conexionaback.models.exceptions.ProductAlreadyInWarehouseException;
+import com.opbaquero.conexionaback.models.service.dto.ActualStockDTO;
+import com.opbaquero.conexionaback.models.service.dto.ReplacementDataExportDTO;
 import com.opbaquero.conexionaback.models.service.dto.WarehouseProductDTO;
 import com.opbaquero.conexionaback.models.service.impl.WareHouseServiceImpl;
 import com.opbaquero.conexionaback.models.service.interfaces.IProductService;
 import com.opbaquero.conexionaback.models.service.interfaces.IWareHouseProductService;
 import com.opbaquero.conexionaback.models.service.interfaces.IWareHouseService;
+import com.opbaquero.conexionaback.utils.ActualStockExportPdf;
+import com.opbaquero.conexionaback.utils.ReplacementExporterPdf;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -17,10 +21,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
@@ -60,6 +65,11 @@ public class WharehouseProductRestController {
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
     }
 
+    @GetMapping("/stock/{wareHouseId}")
+    public List<ActualStockDTO> findStockByWarehouse(@PathVariable(value = "wareHouseId") UUID wareHouseId){
+        return wareHouseProductService.findActualStockByWareHouse(wareHouseId);
+    }
+
     @GetMapping("/get-products/warehouse-id/{wareHouseId}")
     public List<WareHouseProduct> listProductsInWareHouse(@PathVariable(value = "wareHouseId") UUID wareHouseId){
         Warehouse warehouse = this.wareHouseService.findOne(wareHouseId);
@@ -96,6 +106,20 @@ public class WharehouseProductRestController {
         return new ResponseEntity<Map<String,Object>>(response, HttpStatus.CREATED);
     }
 
+    @GetMapping("/export-data/pdf/warehouse-stock/{id}")
+    public void exportToPdfData(@PathVariable(value = "id")UUID id, HttpServletResponse response) throws IOException {
+        response.setContentType("application/pdf");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String now = dateFormat.format(new Date());
+        String headerKey = "Content-Disposition";
+        String headerValue = "attachement; filename=data_" + now + ".pdf";
+        response.setHeader(headerKey, headerValue);
+
+        List<ActualStockDTO> listData = wareHouseProductService.findActualStockByWareHouse(id);
+
+        ActualStockExportPdf export = new ActualStockExportPdf(listData);
+        export.exportDocument(response);
+    }
 
 
 }
