@@ -3,6 +3,7 @@ package com.opbaquero.conexionaback.controllers;
 import com.opbaquero.conexionaback.models.entity.Device;
 import com.opbaquero.conexionaback.models.entity.Warehouse;
 import com.opbaquero.conexionaback.models.service.interfaces.IDeviceService;
+import com.opbaquero.conexionaback.models.service.interfaces.IWareHouseProductService;
 import com.opbaquero.conexionaback.models.service.interfaces.IWareHouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -25,12 +26,14 @@ public class DeviceRestController {
     @Autowired
     private IWareHouseService wareHouseService;
 
+    @Autowired
+    private IWareHouseProductService wareHouseProductService;
+
     @PostMapping("/add/{warehouseId}")
     public ResponseEntity<?> createDevice(@PathVariable(value = "warehouseId") UUID warehouseId, @RequestBody Device device){
         Warehouse warehouse = wareHouseService.findOne(warehouseId);
         Map<String,Object> response = new HashMap<>();
         try{
-            device.setWarehouse(warehouse);
             deviceService.save(device);
         }catch (DataAccessException e){
             response.put("Error", "You can't add device");

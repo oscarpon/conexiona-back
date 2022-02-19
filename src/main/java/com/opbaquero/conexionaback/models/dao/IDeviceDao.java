@@ -14,6 +14,4 @@ public interface IDeviceDao extends JpaRepository<Device, UUID> {
 
     void deleteById(UUID id);
 
-    List<Device> findByWarehouse(Warehouse warehouse);
-
 }

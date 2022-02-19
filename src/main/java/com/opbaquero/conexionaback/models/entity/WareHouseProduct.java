@@ -68,4 +68,11 @@ public class WareHouseProduct implements Serializable {
         this.stock = stock;
     }
 
+    public Device getDevice() {
+        return device;
+    }
+
+    public void setDevice(Device device) {
+        this.device = device;
+    }
 }

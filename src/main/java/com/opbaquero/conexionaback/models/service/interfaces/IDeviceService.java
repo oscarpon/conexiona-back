@@ -16,6 +16,5 @@ public interface IDeviceService {
 
     void delete(UUID id);
 
-    List<Device> findByWareHouse(Warehouse warehouse);
 
 }

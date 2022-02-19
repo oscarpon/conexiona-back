@@ -37,8 +37,4 @@ public class DeviceServiceImpl implements IDeviceService {
         deviceDao.deleteById(id);
     }
 
-    @Override
-    public List<Device> findByWareHouse(Warehouse warehouse) {
-        return deviceDao.findByWarehouse(warehouse);
-    }
 }

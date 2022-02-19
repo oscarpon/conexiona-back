@@ -7,6 +7,8 @@ public class WarehouseProductDTO {
     public UUID product;
     public UUID warehouse;
     public Integer stock;
+    public String deviceName;
+    public String idBasket;
 
     public WarehouseProductDTO() {
     }
@@ -33,5 +35,21 @@ public class WarehouseProductDTO {
 
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    public String getDeviceName() {
+        return deviceName;
+    }
+
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
+    }
+
+    public String getIdBasket() {
+        return idBasket;
+    }
+
+    public void setIdBasket(String idBasket) {
+        this.idBasket = idBasket;
     }
 }

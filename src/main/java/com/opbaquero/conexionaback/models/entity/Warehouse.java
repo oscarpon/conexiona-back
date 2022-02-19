@@ -35,11 +35,6 @@ public class Warehouse implements Serializable {
     @JsonIgnore
     private List<WareHouseProduct> products = new ArrayList<>();
 
-    @OneToMany(mappedBy = "id", fetch = FetchType.LAZY)
-    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
-    @JsonIgnore
-    private List<Device> devices = new ArrayList<>();
-
     public UUID getId() {
         return id;
     }
@@ -80,11 +75,4 @@ public class Warehouse implements Serializable {
         this.products = products;
     }
 
-    public List<Device> getDevices() {
-        return devices;
-    }
-
-    public void setDevices(List<Device> devices) {
-        this.devices = devices;
-    }
 }

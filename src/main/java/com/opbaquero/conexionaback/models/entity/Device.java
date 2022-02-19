@@ -22,11 +22,6 @@ public class Device implements Serializable {
     @Column(name = "device_name")
     private String deviceName;
 
-    @JoinColumn(name = "warehouse_id", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
-    private Warehouse warehouse;
-
     @OneToOne(mappedBy = "device")
     private WareHouseProduct wareHouseProduct;
 
@@ -52,14 +47,6 @@ public class Device implements Serializable {
 
     public void setDeviceName(String deviceName) {
         this.deviceName = deviceName;
-    }
-
-    public Warehouse getWarehouse() {
-        return warehouse;
-    }
-
-    public void setWarehouse(Warehouse warehouse) {
-        this.warehouse = warehouse;
     }
 
     public WareHouseProduct getWareHouseProduct() {
