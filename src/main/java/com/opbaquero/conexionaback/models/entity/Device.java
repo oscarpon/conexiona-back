@@ -21,6 +21,8 @@ public class Device implements Serializable {
     @Column(name = "device_name")
     private String deviceName;
 
+    @OneToOne(mappedBy = "device")
+    private WareHouseProduct wareHouseProduct;
 
     public UUID getId() {
         return id;
