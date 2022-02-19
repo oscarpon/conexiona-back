@@ -2,6 +2,7 @@ package com.opbaquero.conexionaback.models.service.impl;
 
 import com.opbaquero.conexionaback.models.dao.IDeviceDao;
 import com.opbaquero.conexionaback.models.entity.Device;
+import com.opbaquero.conexionaback.models.entity.Warehouse;
 import com.opbaquero.conexionaback.models.service.interfaces.IDeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,5 +35,10 @@ public class DeviceServiceImpl implements IDeviceService {
     @Override
     public void delete(UUID id) {
         deviceDao.deleteById(id);
+    }
+
+    @Override
+    public List<Device> findByWareHouse(Warehouse warehouse) {
+        return deviceDao.findByWarehouse(warehouse);
     }
 }
