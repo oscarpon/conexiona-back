@@ -30,4 +30,6 @@ public interface IWareHouseProductService {
 
     void asociateDeviceToProduct(WareHouseProduct wareHouseProduct);
 
+    List<ActualStockDTO> findStockCeroByAccount(UUID accountId);
+
 }

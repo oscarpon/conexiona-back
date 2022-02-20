@@ -47,4 +47,14 @@ public interface IWareHouseProductDao extends JpaRepository<WareHouseProduct, UU
     @Query("UPDATE WareHouseProduct wp SET wp.device = ?2 WHERE wp.id = ?1")
     void asociateDevideProduct(UUID wareHouseProductId, Device device);
 
+    @Query("SELECT NEW com.opbaquero.conexionaback.models.service.dto.ActualStockDTO(w.wareHouseName, p.nameProduct, wp.stock) " +
+            "FROM WareHouseProduct wp " +
+            "INNER JOIN wp.warehouse w " +
+            "INNER JOIN wp.product p " +
+            "INNER JOIN w.building b " +
+            "INNER JOIN b.hospital h " +
+            "INNER JOIN h.account a " +
+            "WHERE a.id=?1 AND wp.stock = 0")
+    List<ActualStockDTO> findStockCeroByAccount(UUID id);
+
 }
