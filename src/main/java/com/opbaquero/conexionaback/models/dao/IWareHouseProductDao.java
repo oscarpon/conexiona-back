@@ -57,4 +57,5 @@ public interface IWareHouseProductDao extends JpaRepository<WareHouseProduct, UU
             "WHERE a.id=?1 AND wp.stock = 0")
     List<ActualStockDTO> findStockCeroByAccount(UUID id);
 
+
 }
