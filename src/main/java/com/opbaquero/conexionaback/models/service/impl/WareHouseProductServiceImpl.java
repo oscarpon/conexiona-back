@@ -73,5 +73,11 @@ public class WareHouseProductServiceImpl implements IWareHouseProductService {
         wareHouseProductDao.asociateDevideProduct(wareHouseProduct.getId(), wareHouseProduct.getDevice());
     }
 
+    @Override
+    public List<ActualStockDTO> findStockCeroByAccount(UUID accountId) {
+        return wareHouseProductDao.findStockCeroByAccount(accountId);
+    }
+
+
 
 }

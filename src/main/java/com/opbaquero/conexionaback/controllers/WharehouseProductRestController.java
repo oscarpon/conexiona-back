@@ -142,4 +142,9 @@ public class WharehouseProductRestController {
         wareHouseProductService.asociateDeviceToProduct(wareHouseProduct);
     }
 
+    @GetMapping("/empty-stock/{accountId}")
+    public List<ActualStockDTO> findStockCero(@PathVariable(value = "accountId")UUID accountId){
+        return wareHouseProductService.findStockCeroByAccount(accountId);
+    }
+
 }
