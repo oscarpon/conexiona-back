@@ -1,10 +1,11 @@
 package com.opbaquero.conexionaback.controllers;
 
-import com.opbaquero.conexionaback.models.entity.Device;
 import com.opbaquero.conexionaback.models.entity.Products;
 import com.opbaquero.conexionaback.models.entity.WareHouseProduct;
 import com.opbaquero.conexionaback.models.entity.Warehouse;
 import com.opbaquero.conexionaback.models.exceptions.ProductAlreadyInWarehouseException;
+import com.opbaquero.conexionaback.models.service.dto.ActualStockDTO;
+import com.opbaquero.conexionaback.models.service.dto.ReplacementDataExportDTO;
 import com.opbaquero.conexionaback.models.service.dto.ActualStockDTO;
 import com.opbaquero.conexionaback.models.service.dto.AsociateDeviceProductDTO;
 import com.opbaquero.conexionaback.models.service.dto.ReplacementDataExportDTO;
@@ -24,11 +25,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
