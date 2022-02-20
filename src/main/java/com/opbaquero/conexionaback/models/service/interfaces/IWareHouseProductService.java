@@ -26,4 +26,8 @@ public interface IWareHouseProductService {
 
     List<ActualStockDTO> findActualStockByWareHouse(UUID id);
 
+    void reduceStockOfProduct(UUID id);
+
+    void asociateDeviceToProduct(WareHouseProduct wareHouseProduct);
+
 }

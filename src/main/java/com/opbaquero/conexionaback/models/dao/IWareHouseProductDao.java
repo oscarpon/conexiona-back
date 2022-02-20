@@ -1,5 +1,6 @@
 package com.opbaquero.conexionaback.models.dao;
 
+import com.opbaquero.conexionaback.models.entity.Device;
 import com.opbaquero.conexionaback.models.entity.WareHouseProduct;
 import com.opbaquero.conexionaback.models.entity.Warehouse;
 import com.opbaquero.conexionaback.models.service.dto.ActualStockDTO;
@@ -35,5 +36,15 @@ public interface IWareHouseProductDao extends JpaRepository<WareHouseProduct, UU
             "INNER JOIN wp.product p " +
             "WHERE w.id=?1")
     List<ActualStockDTO> findActualStockByWareHouse(UUID id);
+
+    @Modifying
+    @Transactional
+    @Query("update WareHouseProduct wp set wp.stock = wp.stock - 1 where wp.id = ?1")
+    void reduceStockOfProduct(UUID id);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE WareHouseProduct wp SET wp.device = ?2 WHERE wp.id = ?1")
+    void asociateDevideProduct(UUID wareHouseProductId, Device device);
 
 }

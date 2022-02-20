@@ -30,7 +30,7 @@ public class Warehouse implements Serializable {
     @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private Building building;
 
-    @OneToMany(mappedBy = "id", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "id", fetch = FetchType.LAZY)
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     @JsonIgnore
     private List<WareHouseProduct> products = new ArrayList<>();
@@ -74,4 +74,5 @@ public class Warehouse implements Serializable {
     public void setProducts(List<WareHouseProduct> products) {
         this.products = products;
     }
+
 }

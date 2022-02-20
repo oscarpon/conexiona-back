@@ -30,6 +30,11 @@ public class WareHouseProduct implements Serializable {
     @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private Products product;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "device_id", referencedColumnName = "id")
+    @JsonIgnore
+    private Device device;
+
     private int stock;
 
     public UUID getId() {
@@ -64,4 +69,11 @@ public class WareHouseProduct implements Serializable {
         this.stock = stock;
     }
 
+    public Device getDevice() {
+        return device;
+    }
+
+    public void setDevice(Device device) {
+        this.device = device;
+    }
 }

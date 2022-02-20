@@ -1,5 +1,6 @@
 package com.opbaquero.conexionaback.models.entity;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -21,6 +22,8 @@ public class Device implements Serializable {
     @Column(name = "device_name")
     private String deviceName;
 
+    @OneToOne(mappedBy = "device")
+    private WareHouseProduct wareHouseProduct;
 
     public UUID getId() {
         return id;
@@ -44,5 +47,13 @@ public class Device implements Serializable {
 
     public void setDeviceName(String deviceName) {
         this.deviceName = deviceName;
+    }
+
+    public WareHouseProduct getWareHouseProduct() {
+        return wareHouseProduct;
+    }
+
+    public void setWareHouseProduct(WareHouseProduct wareHouseProduct) {
+        this.wareHouseProduct = wareHouseProduct;
     }
 }

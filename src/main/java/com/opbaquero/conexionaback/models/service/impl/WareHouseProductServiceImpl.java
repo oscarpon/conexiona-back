@@ -63,5 +63,15 @@ public class WareHouseProductServiceImpl implements IWareHouseProductService {
         return wareHouseProductDao.findActualStockByWareHouse(id);
     }
 
+    @Override
+    public void reduceStockOfProduct(UUID id) {
+        wareHouseProductDao.reduceStockOfProduct(id);
+    }
+
+    @Override
+    public void asociateDeviceToProduct(WareHouseProduct wareHouseProduct){
+        wareHouseProductDao.asociateDevideProduct(wareHouseProduct.getId(), wareHouseProduct.getDevice());
+    }
+
 
 }

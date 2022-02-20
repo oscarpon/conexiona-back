@@ -1,13 +1,18 @@
 package com.opbaquero.conexionaback.controllers;
 
+import com.opbaquero.conexionaback.models.entity.Device;
 import com.opbaquero.conexionaback.models.entity.Products;
 import com.opbaquero.conexionaback.models.entity.WareHouseProduct;
 import com.opbaquero.conexionaback.models.entity.Warehouse;
 import com.opbaquero.conexionaback.models.exceptions.ProductAlreadyInWarehouseException;
 import com.opbaquero.conexionaback.models.service.dto.ActualStockDTO;
 import com.opbaquero.conexionaback.models.service.dto.ReplacementDataExportDTO;
+import com.opbaquero.conexionaback.models.service.dto.ActualStockDTO;
+import com.opbaquero.conexionaback.models.service.dto.AsociateDeviceProductDTO;
+import com.opbaquero.conexionaback.models.service.dto.ReplacementDataExportDTO;
 import com.opbaquero.conexionaback.models.service.dto.WarehouseProductDTO;
 import com.opbaquero.conexionaback.models.service.impl.WareHouseServiceImpl;
+import com.opbaquero.conexionaback.models.service.interfaces.IDeviceService;
 import com.opbaquero.conexionaback.models.service.interfaces.IProductService;
 import com.opbaquero.conexionaback.models.service.interfaces.IWareHouseProductService;
 import com.opbaquero.conexionaback.models.service.interfaces.IWareHouseService;
@@ -41,6 +46,9 @@ public class WharehouseProductRestController {
     @Autowired
     private IProductService productService;
 
+    @Autowired
+    private IDeviceService deviceService;
+
     @GetMapping("/{wareHouseProductId}")
     public WareHouseProduct getWareHouseProduct(@PathVariable(value = "wareHouseProductId") UUID wareHouseProductId){
         return wareHouseProductService.findOne(wareHouseProductId);
@@ -53,9 +61,14 @@ public class WharehouseProductRestController {
             WareHouseProduct wareHouseProduct = new WareHouseProduct();
             Products product1 = this.productService.findOne(warehouseProductDTO.getProduct());
             Warehouse warehouse1 = this.wareHouseService.findOne(warehouseProductDTO.getWarehouse());
+            Device device = new Device();
+            device.setDeviceName(warehouseProductDTO.getDeviceName());
+            device.setIdBasket(warehouseProductDTO.getIdBasket());
             wareHouseProduct.setProducts(product1);
             wareHouseProduct.setWarehouse(warehouse1);
             wareHouseProduct.setStock(warehouseProductDTO.getStock());
+            wareHouseProduct.setDevice(device);
+            deviceService.save(device);
             wareHouseProductService.save(wareHouseProduct);
         }catch (DataAccessException | ProductAlreadyInWarehouseException e){
             response.put("error", e.getMessage());
@@ -121,5 +134,12 @@ public class WharehouseProductRestController {
         export.exportDocument(response);
     }
 
+    @PutMapping("/asociate-device")
+    public void asociateDeviceProduct(@RequestBody AsociateDeviceProductDTO asociateDeviceProductDTO) {
+        Device device = deviceService.findOne(asociateDeviceProductDTO.getDeviceId());
+        WareHouseProduct wareHouseProduct = wareHouseProductService.findOne(asociateDeviceProductDTO.getWareHouseProductId());
+        wareHouseProduct.setDevice(device);
+        wareHouseProductService.asociateDeviceToProduct(wareHouseProduct);
+    }
 
 }

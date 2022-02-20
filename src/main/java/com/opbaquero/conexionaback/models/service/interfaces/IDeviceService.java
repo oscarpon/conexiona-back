@@ -1,20 +1,20 @@
 package com.opbaquero.conexionaback.models.service.interfaces;
 
 import com.opbaquero.conexionaback.models.entity.Device;
+import com.opbaquero.conexionaback.models.entity.Warehouse;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface IDeviceService {
 
-    public List<Device> findAll();
+    List<Device> findAll();
 
-    public Device save(Device device);
+    Device save(Device device);
 
-    public Device findOne(UUID id);
+    Device findOne(UUID id);
 
-    public void delete(UUID id);
+    void delete(UUID id);
 
-    //findByWareHouse(WareHouse warehouse)
 
 }
