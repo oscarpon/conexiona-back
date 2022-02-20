@@ -29,18 +29,6 @@ public class DeviceRestController {
     @Autowired
     private IWareHouseProductService wareHouseProductService;
 
-    @PostMapping("/add/{warehouseId}")
-    public ResponseEntity<?> createDevice(@PathVariable(value = "warehouseId") UUID warehouseId, @RequestBody Device device){
-        Warehouse warehouse = wareHouseService.findOne(warehouseId);
-        Map<String,Object> response = new HashMap<>();
-        try{
-            deviceService.save(device);
-        }catch (DataAccessException e){
-            response.put("Error", "You can't add device");
-            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        response.put("Message", "Device created");
-        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
-    }
+
 
 }
