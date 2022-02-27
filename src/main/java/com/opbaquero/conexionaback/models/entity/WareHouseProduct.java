@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Type;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -16,18 +17,23 @@ public class WareHouseProduct implements Serializable {
 
     @Id
     @GeneratedValue
-    @Type(type="org.hibernate.type.UUIDCharType")
+    @Type(type = "org.hibernate.type.UUIDCharType")
     private UUID id;
 
     @JoinColumn(name = "warehouse_id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private Warehouse warehouse;
 
     @JoinColumn(name = "product_id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private Products product;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "device_id", referencedColumnName = "id")
+    @JsonIgnore
+    private Device device;
 
     private int stock;
 
@@ -63,4 +69,11 @@ public class WareHouseProduct implements Serializable {
         this.stock = stock;
     }
 
+    public Device getDevice() {
+        return device;
+    }
+
+    public void setDevice(Device device) {
+        this.device = device;
+    }
 }

@@ -1,8 +1,6 @@
 package com.opbaquero.conexionaback.controllers;
 
 import com.opbaquero.conexionaback.models.entity.Account;
-import com.opbaquero.conexionaback.models.service.dto.EmailDTO;
-import com.opbaquero.conexionaback.models.service.impl.EmailServiceImpl;
 import com.opbaquero.conexionaback.models.service.interfaces.IAccountService;
 import com.opbaquero.conexionaback.models.service.interfaces.IEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +21,9 @@ import java.util.UUID;
 public class AccountRestController {
     @Autowired
     public IAccountService accountService;
+
+    @Autowired
+    public IEmailService emailService;
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -46,14 +47,13 @@ public class AccountRestController {
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> create(@RequestBody Account account){
-        Account newAccount = null;
         Map<String, Object> response = new HashMap<>();
         if(accountService.existsByAccountName(account.accountName)){
             response.put("error", "Account name already exists");
             return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
         }
         try{
-            newAccount = accountService.save(account);
+            accountService.save(account);
         }catch (DataAccessException e){
             response.put("error", "Impossible ad account to database");
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);

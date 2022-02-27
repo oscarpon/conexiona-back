@@ -1,7 +1,10 @@
 package com.opbaquero.conexionaback.models.service.impl;
 
 import com.opbaquero.conexionaback.models.dao.IDeviceDao;
+import com.opbaquero.conexionaback.models.dao.IDeviceReadsDao;
 import com.opbaquero.conexionaback.models.entity.Device;
+import com.opbaquero.conexionaback.models.entity.Warehouse;
+import com.opbaquero.conexionaback.models.service.dto.DeviceReadDTO;
 import com.opbaquero.conexionaback.models.service.interfaces.IDeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,9 @@ import java.util.UUID;
 public class DeviceServiceImpl implements IDeviceService {
     @Autowired
     private IDeviceDao deviceDao;
+
+    @Autowired
+    private IDeviceReadsDao deviceReadsDao;
 
     @Override
     @Transactional(readOnly = true)
@@ -35,4 +41,10 @@ public class DeviceServiceImpl implements IDeviceService {
     public void delete(UUID id) {
         deviceDao.deleteById(id);
     }
+
+    @Override
+    public List<DeviceReadDTO> findReadsByWarehouseWithProductName(Warehouse warehouse) {
+        return deviceReadsDao.findReadsByWarehouseWithProductName(warehouse);
+    }
+
 }

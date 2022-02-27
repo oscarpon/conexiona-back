@@ -1,8 +1,11 @@
 package com.opbaquero.conexionaback.models.service.impl;
 
 import com.opbaquero.conexionaback.models.dao.IWareHouseProductDao;
+import com.opbaquero.conexionaback.models.entity.Device;
 import com.opbaquero.conexionaback.models.entity.WareHouseProduct;
 import com.opbaquero.conexionaback.models.entity.Warehouse;
+import com.opbaquero.conexionaback.models.exceptions.ProductAlreadyInWarehouseException;
+import com.opbaquero.conexionaback.models.service.dto.ActualStockDTO;
 import com.opbaquero.conexionaback.models.service.interfaces.IWareHouseProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +26,10 @@ public class WareHouseProductServiceImpl implements IWareHouseProductService {
     }
 
     @Override
-    public WareHouseProduct save(WareHouseProduct wareHouseProduct) {
+    public WareHouseProduct save(WareHouseProduct wareHouseProduct) throws ProductAlreadyInWarehouseException {
+        if(findWareHouseProductByIds(wareHouseProduct.getWarehouse().getId(), wareHouseProduct.getProducts().getId()) != null){
+            throw new ProductAlreadyInWarehouseException("El producto ya se encuentra en el almacén. Inicia una reposición.");
+        }
         return wareHouseProductDao.save(wareHouseProduct);
     }
 
@@ -42,4 +48,37 @@ public class WareHouseProductServiceImpl implements IWareHouseProductService {
     public List<WareHouseProduct> findByWareHouse(Warehouse warehouse) {
         return wareHouseProductDao.findByWarehouse(warehouse);
     }
+
+    @Override
+    public WareHouseProduct findWareHouseProductByIds(UUID wareHouse, UUID productId) {
+        return wareHouseProductDao.findWareHouseProductByWareHouseAndProduct(wareHouse, productId);
+    }
+
+    @Override
+    public void update(WareHouseProduct wareHouseProduct) {
+        wareHouseProductDao.updateStock(wareHouseProduct.getWarehouse().getId(), wareHouseProduct.getProducts().getId(), wareHouseProduct.getStock());
+    }
+
+    @Override
+    public List<ActualStockDTO> findActualStockByWareHouse(UUID id){
+        return wareHouseProductDao.findActualStockByWareHouse(id);
+    }
+
+    @Override
+    public void reduceStockOfProduct(Device device) {
+        wareHouseProductDao.reduceStockOfProduct(device);
+    }
+
+    @Override
+    public void asociateDeviceToProduct(WareHouseProduct wareHouseProduct){
+        wareHouseProductDao.asociateDevideProduct(wareHouseProduct.getId(), wareHouseProduct.getDevice());
+    }
+
+    @Override
+    public List<ActualStockDTO> findStockCeroByAccount(UUID accountId) {
+        return wareHouseProductDao.findStockCeroByAccount(accountId);
+    }
+
+
+
 }
