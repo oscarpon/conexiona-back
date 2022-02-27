@@ -20,6 +20,6 @@ public interface IWareHouseDao extends JpaRepository<Warehouse, UUID> {
     void deleteById(UUID id);
 
     @Query("select w from Warehouse w join Building b on b.id = w.building join Hospital h on h.id = b.hospital where h.account.id like ?1")
-    public List<Warehouse> joinWareHouseByIdWithBuildingsWithHospitalsWithAccount(UUID accountId);
+    List<Warehouse> joinWareHouseByIdWithBuildingsWithHospitalsWithAccount(UUID accountId);
     
 }

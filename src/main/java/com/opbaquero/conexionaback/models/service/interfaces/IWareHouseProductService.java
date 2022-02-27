@@ -1,5 +1,6 @@
 package com.opbaquero.conexionaback.models.service.interfaces;
 
+import com.opbaquero.conexionaback.models.entity.Device;
 import com.opbaquero.conexionaback.models.entity.WareHouseProduct;
 import com.opbaquero.conexionaback.models.entity.Warehouse;
 import com.opbaquero.conexionaback.models.exceptions.ProductAlreadyInWarehouseException;
@@ -26,7 +27,7 @@ public interface IWareHouseProductService {
 
     List<ActualStockDTO> findActualStockByWareHouse(UUID id);
 
-    void reduceStockOfProduct(UUID id);
+    void reduceStockOfProduct(Device id);
 
     void asociateDeviceToProduct(WareHouseProduct wareHouseProduct);
 

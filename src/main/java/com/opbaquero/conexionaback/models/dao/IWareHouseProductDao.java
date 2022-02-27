@@ -39,8 +39,8 @@ public interface IWareHouseProductDao extends JpaRepository<WareHouseProduct, UU
 
     @Modifying
     @Transactional
-    @Query("update WareHouseProduct wp set wp.stock = wp.stock - 1 where wp.id = ?1")
-    void reduceStockOfProduct(UUID id);
+    @Query("update WareHouseProduct wp set wp.stock = wp.stock - 1 where wp.device = ?1")
+    void reduceStockOfProduct(Device device);
 
     @Modifying
     @Transactional

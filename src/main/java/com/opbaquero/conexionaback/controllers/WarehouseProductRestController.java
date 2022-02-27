@@ -1,9 +1,6 @@
 package com.opbaquero.conexionaback.controllers;
 
-import com.opbaquero.conexionaback.models.entity.Device;
-import com.opbaquero.conexionaback.models.entity.Products;
-import com.opbaquero.conexionaback.models.entity.WareHouseProduct;
-import com.opbaquero.conexionaback.models.entity.Warehouse;
+import com.opbaquero.conexionaback.models.entity.*;
 import com.opbaquero.conexionaback.models.exceptions.ProductAlreadyInWarehouseException;
 import com.opbaquero.conexionaback.models.service.dto.ActualStockDTO;
 import com.opbaquero.conexionaback.models.service.dto.ReplacementDataExportDTO;
@@ -12,10 +9,7 @@ import com.opbaquero.conexionaback.models.service.dto.AsociateDeviceProductDTO;
 import com.opbaquero.conexionaback.models.service.dto.ReplacementDataExportDTO;
 import com.opbaquero.conexionaback.models.service.dto.WarehouseProductDTO;
 import com.opbaquero.conexionaback.models.service.impl.WareHouseServiceImpl;
-import com.opbaquero.conexionaback.models.service.interfaces.IDeviceService;
-import com.opbaquero.conexionaback.models.service.interfaces.IProductService;
-import com.opbaquero.conexionaback.models.service.interfaces.IWareHouseProductService;
-import com.opbaquero.conexionaback.models.service.interfaces.IWareHouseService;
+import com.opbaquero.conexionaback.models.service.interfaces.*;
 import com.opbaquero.conexionaback.utils.ActualStockExportPdf;
 import com.opbaquero.conexionaback.utils.ReplacementExporterPdf;
 import org.apache.coyote.Response;
@@ -35,7 +29,7 @@ import java.util.*;
 @CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping("/warehouse-product")
-public class WharehouseProductRestController {
+public class WarehouseProductRestController {
 
     @Autowired
     private IWareHouseProductService wareHouseProductService;
@@ -48,6 +42,9 @@ public class WharehouseProductRestController {
 
     @Autowired
     private IDeviceService deviceService;
+
+    @Autowired
+    private IReadsService readsService;
 
     @GetMapping("/{wareHouseProductId}")
     public WareHouseProduct getWareHouseProduct(@PathVariable(value = "wareHouseProductId") UUID wareHouseProductId){
@@ -145,6 +142,14 @@ public class WharehouseProductRestController {
     @GetMapping("/empty-stock/{accountId}")
     public List<ActualStockDTO> findStockCero(@PathVariable(value = "accountId")UUID accountId){
         return wareHouseProductService.findStockCeroByAccount(accountId);
+    }
+
+    @PutMapping("/reduce-stock/{deviceId}")
+    public void reduceStockOfWareHouseProduct(@PathVariable(value = "deviceId") UUID deviceId){
+        Device device = deviceService.findOne(deviceId);
+        Read read = new Read(device, device.getWareHouseProduct());
+        readsService.save(read);
+        wareHouseProductService.reduceStockOfProduct(device);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.opbaquero.conexionaback.models.service.impl;
 
 import com.opbaquero.conexionaback.models.dao.IWareHouseProductDao;
+import com.opbaquero.conexionaback.models.entity.Device;
 import com.opbaquero.conexionaback.models.entity.WareHouseProduct;
 import com.opbaquero.conexionaback.models.entity.Warehouse;
 import com.opbaquero.conexionaback.models.exceptions.ProductAlreadyInWarehouseException;
@@ -64,8 +65,8 @@ public class WareHouseProductServiceImpl implements IWareHouseProductService {
     }
 
     @Override
-    public void reduceStockOfProduct(UUID id) {
-        wareHouseProductDao.reduceStockOfProduct(id);
+    public void reduceStockOfProduct(Device device) {
+        wareHouseProductDao.reduceStockOfProduct(device);
     }
 
     @Override
