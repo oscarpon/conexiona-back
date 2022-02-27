@@ -1,5 +1,6 @@
 package com.opbaquero.conexionaback.models.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.opbaquero.conexionaback.models.entity.Device;
 
 import java.time.LocalDateTime;
@@ -13,11 +14,19 @@ public class DeviceReadDTO {
 
     public String nameProduct;
 
+    @JsonIgnore
     public Device idDevice;
 
 
     public DeviceReadDTO(UUID id, String nameProduct, Device idDevice) {
         this.id = id;
+        this.nameProduct = nameProduct;
+        this.idDevice = idDevice;
+    }
+
+    public DeviceReadDTO(UUID id, LocalDateTime date_read, String nameProduct, Device idDevice) {
+        this.id = id;
+        this.date_read = date_read;
         this.nameProduct = nameProduct;
         this.idDevice = idDevice;
     }

@@ -3,6 +3,7 @@ package com.opbaquero.conexionaback.models.service.impl;
 import com.opbaquero.conexionaback.models.dao.IDeviceReadsDao;
 import com.opbaquero.conexionaback.models.entity.Device;
 import com.opbaquero.conexionaback.models.entity.Read;
+import com.opbaquero.conexionaback.models.entity.Warehouse;
 import com.opbaquero.conexionaback.models.service.dto.DeviceReadDTO;
 import com.opbaquero.conexionaback.models.service.interfaces.IReadsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class ReadsServiceImpl implements IReadsService {
     }
 
     @Override
-    public List<DeviceReadDTO> findReadsWithProductName(UUID warehouseId) {
-        return deviceReadsDao.findReadsByWarehouseWithProductName(warehouseId);
+    public List<DeviceReadDTO> findReadsWithProductName(Warehouse warehouse) {
+        return deviceReadsDao.findReadsByWarehouseWithProductName(warehouse);
     }
 }

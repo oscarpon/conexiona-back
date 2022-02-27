@@ -2,12 +2,9 @@ package com.opbaquero.conexionaback.controllers;
 
 import com.opbaquero.conexionaback.models.entity.*;
 import com.opbaquero.conexionaback.models.exceptions.ProductAlreadyInWarehouseException;
+import com.opbaquero.conexionaback.models.service.dto.*;
 import com.opbaquero.conexionaback.models.service.dto.ActualStockDTO;
 import com.opbaquero.conexionaback.models.service.dto.ReplacementDataExportDTO;
-import com.opbaquero.conexionaback.models.service.dto.ActualStockDTO;
-import com.opbaquero.conexionaback.models.service.dto.AsociateDeviceProductDTO;
-import com.opbaquero.conexionaback.models.service.dto.ReplacementDataExportDTO;
-import com.opbaquero.conexionaback.models.service.dto.WarehouseProductDTO;
 import com.opbaquero.conexionaback.models.service.impl.WareHouseServiceImpl;
 import com.opbaquero.conexionaback.models.service.interfaces.*;
 import com.opbaquero.conexionaback.utils.ActualStockExportPdf;
@@ -150,6 +147,12 @@ public class WarehouseProductRestController {
         Read read = new Read(device, device.getWareHouseProduct());
         readsService.save(read);
         wareHouseProductService.reduceStockOfProduct(device);
+    }
+
+    @GetMapping("/reads/{warehouseId}")
+    public List<DeviceReadDTO> getReadsDevice(@PathVariable(value="warehouseId") UUID warehouseId){
+        Warehouse warehouse = wareHouseService.findOne(warehouseId);
+        return deviceService.findReadsByWarehouseWithProductName(warehouse);
     }
 
 }

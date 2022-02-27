@@ -29,6 +29,9 @@ public class Read {
     @JsonIgnore
     private WareHouseProduct wareHouseProduct;
 
+    public Read() {
+    }
+
     public Read(Device device, WareHouseProduct wareHouseProduct) {
         this.device = device;
         this.wareHouseProduct = wareHouseProduct;

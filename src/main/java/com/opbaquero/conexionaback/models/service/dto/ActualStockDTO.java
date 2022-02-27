@@ -14,6 +14,8 @@ public class ActualStockDTO {
         this.stock = stock;
     }
 
+
+
     public String getWareHouse() {
         return wareHouse;
     }
