@@ -23,7 +23,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = {"http://localhost:4200", "https://kanbansense-app.azurewebsites.net/"})
 @RestController
 @RequestMapping("/warehouse-product")
 public class WarehouseProductRestController {
