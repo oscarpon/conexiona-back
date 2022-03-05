@@ -34,7 +34,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = {"http://localhost:4200", "https://kanbansense-app.azurewebsites.net/"})
+@CrossOrigin(origins = {"*"})
 public class UserController {
     Map<String, Object> response = new HashMap<>();
 

@@ -23,7 +23,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 
-@CrossOrigin(origins = {"http://localhost:4200", "https://kanbansense-app.azurewebsites.net/"})
+@CrossOrigin(origins = {"*"})
 @RestController
 @RequestMapping("/replacement")
 public class ReplacementRestController {
