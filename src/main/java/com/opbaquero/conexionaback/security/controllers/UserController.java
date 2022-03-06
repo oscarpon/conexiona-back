@@ -108,6 +108,7 @@ public class UserController {
     }
 
     @GetMapping("/all/{userId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_GESTOR')")
     public User getUser(@PathVariable (value = "userId") UUID id){
         return userService.findOne(id);
     }
@@ -135,6 +136,7 @@ public class UserController {
     }
 
     @DeleteMapping("/add/{userId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') || hasRole('ROLE_GESTOR')")
     public ResponseEntity<?> delete(@PathVariable (value = "userId")UUID id){
         Map<String, Object> response = new HashMap<>();
         try{
