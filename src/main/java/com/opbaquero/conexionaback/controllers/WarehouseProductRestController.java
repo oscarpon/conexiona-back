@@ -25,7 +25,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-@CrossOrigin(origins = {"*"})
+
 @RestController
 @RequestMapping("/warehouse-product")
 public class WarehouseProductRestController {

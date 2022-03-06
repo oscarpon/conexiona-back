@@ -34,7 +34,6 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = {"*"})
 public class UserController {
     Map<String, Object> response = new HashMap<>();
 
