@@ -25,7 +25,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-@CrossOrigin(origins = {"*"})
 @RestController
 @RequestMapping("/warehouse-product")
 public class WarehouseProductRestController {
@@ -128,14 +127,6 @@ public class WarehouseProductRestController {
 
         ActualStockExportPdf export = new ActualStockExportPdf(listData);
         export.exportDocument(response);
-    }
-
-    @PutMapping("/asociate-device")
-    public void asociateDeviceProduct(@RequestBody AsociateDeviceProductDTO asociateDeviceProductDTO) {
-        Device device = deviceService.findOne(asociateDeviceProductDTO.getDeviceId());
-        WareHouseProduct wareHouseProduct = wareHouseProductService.findOne(asociateDeviceProductDTO.getWareHouseProductId());
-        wareHouseProduct.setDevice(device);
-        wareHouseProductService.asociateDeviceToProduct(wareHouseProduct);
     }
 
     @PutMapping("/reduce-stock/{deviceId}")

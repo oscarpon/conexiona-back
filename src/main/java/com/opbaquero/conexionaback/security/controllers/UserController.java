@@ -34,7 +34,6 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = {"*"})
 public class UserController {
     Map<String, Object> response = new HashMap<>();
 
@@ -160,7 +159,7 @@ public class UserController {
         return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/forgot-password")
+    @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(@RequestParam("userEmail") String userEmail){
         Map<String, Object> response = new HashMap<>();
 
