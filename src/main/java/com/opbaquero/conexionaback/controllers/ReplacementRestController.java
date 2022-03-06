@@ -23,7 +23,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 
-
 @RestController
 @RequestMapping("/replacement")
 public class ReplacementRestController {

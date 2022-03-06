@@ -25,7 +25,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-
 @RestController
 @RequestMapping("/warehouse-product")
 public class WarehouseProductRestController {
