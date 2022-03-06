@@ -129,14 +129,6 @@ public class WarehouseProductRestController {
         export.exportDocument(response);
     }
 
-    @PutMapping("/asociate-device")
-    public void asociateDeviceProduct(@RequestBody AsociateDeviceProductDTO asociateDeviceProductDTO) {
-        Device device = deviceService.findOne(asociateDeviceProductDTO.getDeviceId());
-        WareHouseProduct wareHouseProduct = wareHouseProductService.findOne(asociateDeviceProductDTO.getWareHouseProductId());
-        wareHouseProduct.setDevice(device);
-        wareHouseProductService.asociateDeviceToProduct(wareHouseProduct);
-    }
-
     @PutMapping("/reduce-stock/{deviceId}")
     public void reduceStockOfWareHouseProduct(@PathVariable(value = "deviceId") UUID deviceId){
         Device device = deviceService.findOne(deviceId);
