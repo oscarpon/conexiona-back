@@ -12,6 +12,8 @@ public class ReplacementItemDTO {
 
     private String productName;
 
+    public ReplacementItemDTO(){}
+
     public ReplacementItemDTO(UUID product, Integer quantity, String productName) {
         this.product = product;
         this.quantity = quantity;

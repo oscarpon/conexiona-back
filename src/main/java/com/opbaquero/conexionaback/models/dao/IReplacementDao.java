@@ -19,7 +19,7 @@ public interface IReplacementDao extends JpaRepository<Replacement, UUID> {
 
     List<Replacement> findByWarehouse(Warehouse warehouse);
 
-    @Query("SELECT NEW com.opbaquero.conexionaback.models.service.dto.ReplacementDataExportDTO(r.date, u.userName, w.wareHouseName, b.buildingName, h.hospitalName, a.accountName) " +
+    @Query("SELECT NEW com.opbaquero.conexionaback.models.service.dto.ReplacementDataExportDTO(r.id,r.date, u.userName, w.wareHouseName, b.buildingName, h.hospitalName, a.accountName) " +
             "FROM Replacement r " +
             "INNER JOIN r.user u " +
             "INNER JOIN r.warehouse w " +
