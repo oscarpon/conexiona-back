@@ -4,6 +4,7 @@ import com.opbaquero.conexionaback.models.dao.IProductDao;
 import com.opbaquero.conexionaback.models.dao.IReplacementDao;
 import com.opbaquero.conexionaback.models.entity.*;
 import com.opbaquero.conexionaback.models.service.dto.ReplacementDataExportDTO;
+import com.opbaquero.conexionaback.models.service.dto.ReplacementItemDTO;
 import com.opbaquero.conexionaback.models.service.interfaces.IReplacementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,6 +55,11 @@ public class ReplacementServiceImpl implements IReplacementService {
     @Transactional
     public List<ReplacementDataExportDTO> findDataRepositionByAccount(UUID id){
         return replacementDao.findDataRepositionByAccount(id);
+    }
+
+    @Override
+    public List<ReplacementItemDTO> findItemsByRepositionId(UUID id) {
+        return replacementDao.findItemsByReplacementId(id);
     }
 
 
