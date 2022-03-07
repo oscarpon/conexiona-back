@@ -10,6 +10,16 @@ public class ReplacementItemDTO {
 
     private UUID product;
 
+    private String productName;
+
+    public ReplacementItemDTO(){}
+
+    public ReplacementItemDTO(UUID product, Integer quantity, String productName) {
+        this.product = product;
+        this.quantity = quantity;
+        this.productName = productName;
+    }
+
     public String getId() {
         return id;
     }
@@ -32,5 +42,13 @@ public class ReplacementItemDTO {
 
     public void setProduct(UUID product) {
         this.product = product;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 }

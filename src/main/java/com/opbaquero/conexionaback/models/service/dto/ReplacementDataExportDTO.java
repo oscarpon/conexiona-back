@@ -5,8 +5,11 @@ import org.springframework.beans.factory.annotation.Value;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.util.Date;
+import java.util.UUID;
 
 public class ReplacementDataExportDTO {
+
+    public UUID id;
 
     public Date date;
 
@@ -20,7 +23,8 @@ public class ReplacementDataExportDTO {
 
     public String accountName;
 
-    public ReplacementDataExportDTO(Date date, String userName, String wareHouseName, String buildingName, String hospitalName, String accountName) {
+    public ReplacementDataExportDTO(UUID id, Date date, String userName, String wareHouseName, String buildingName, String hospitalName, String accountName) {
+        this.id = id;
         this.date = date;
         this.userName = userName;
         this.wareHouseName = wareHouseName;
@@ -51,5 +55,13 @@ public class ReplacementDataExportDTO {
 
     public String getAccountName() {
         return accountName;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 }

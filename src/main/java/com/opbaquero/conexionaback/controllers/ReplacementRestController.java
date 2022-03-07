@@ -9,6 +9,7 @@ import com.opbaquero.conexionaback.security.entity.User;
 import com.opbaquero.conexionaback.security.service.UserService;
 import com.opbaquero.conexionaback.utils.ReplacementExporterExcel;
 import com.opbaquero.conexionaback.utils.ReplacementExporterPdf;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -50,6 +51,11 @@ public class ReplacementRestController {
         return replacementService.findDataRepositionByAccount(id);
     }
 
+    @GetMapping("/detail/{replacementId}")
+    public List<ReplacementItemDTO> replacementDetail(@PathVariable(value = "replacementId") UUID id){
+        return replacementService.findItemsByRepositionId(id);
+    }
+
     @GetMapping("/export-data/pdf/{id}")
     public void exportToPdfData(@PathVariable(value = "id")UUID id, HttpServletResponse response) throws IOException {
         response.setContentType("application/pdf");
@@ -78,24 +84,6 @@ public class ReplacementRestController {
 
         ReplacementExporterExcel export = new ReplacementExporterExcel(listData);
         export.export(response);
-    }
-
-    @GetMapping("/detail/{id}")
-    public ResponseEntity<?> detail(@PathVariable(value = "id")UUID id){
-        Replacement replacement = replacementService.fetchReplacementByIdWithUserWithReplacementItemWithProducts(id);
-        Map<String, Object> response = new HashMap<>();
-        if(replacement == null){
-            response.put("error", "Replace not found");
-            return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
-        }
-        try{
-
-        }catch (DataAccessException e){
-            response.put("error", "Imposible access");
-            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        response.put("Message", "Access succesfull");
-        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
     }
 
     @PostMapping("/add")
