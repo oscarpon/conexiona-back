@@ -86,27 +86,6 @@ public class ReplacementRestController {
         export.export(response);
     }
 
-    /**
-    @GetMapping("/detail/{id}")
-    public ResponseEntity<?> detail(@PathVariable(value = "id")UUID id){
-        Replacement replacement = replacementService.fetchReplacementByIdWithUserWithReplacementItemWithProducts(id);
-        Map<String, Object> response = new HashMap<>();
-        if(replacement == null){
-            response.put("error", "Replace not found");
-            return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
-        }
-        try{
-
-        }catch (DataAccessException e){
-            response.put("error", "Imposible access");
-            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        response.put("Message", "Access succesfull");
-        return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
-    }*/
-
-
-
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody ReplacementDTO reqReplacement){
         Map<String, Object> response = new HashMap<>();
