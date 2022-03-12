@@ -40,6 +40,7 @@ public class HospitalRestController {
     }
 
     @GetMapping("/{hospitalId}")
+    @PreAuthorize("hasRole('ROLE_GESTOR')")
     public Hospital getHospital(@PathVariable (value = "hospitalId") UUID hospitalId){
         return hospitalService.findOne(hospitalId);
     }
@@ -52,6 +53,7 @@ public class HospitalRestController {
 
     @PostMapping("/add/{accountId}")
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('ROLE_GESTOR')")
     public ResponseEntity<?> createHospital(@PathVariable (value = "accountId") UUID accountId, @RequestBody Hospital hospitalReq){
         Hospital newHospital = new Hospital();
         Account account = accountService.findOne(accountId);
@@ -68,6 +70,7 @@ public class HospitalRestController {
     }
 
     @DeleteMapping("/add/{hospitalId}")
+    @PreAuthorize("hasRole('ROLE_GESTOR')")
     public ResponseEntity<?> delete(@PathVariable (value = "hospitalId") UUID hospitalId){
         Map<String, Object> response = new HashMap<>();
         try{
@@ -83,6 +86,7 @@ public class HospitalRestController {
 
 
     @PutMapping("/add/{hospitalId}")
+    @PreAuthorize("hasRole('ROLE_GESTOR')")
     public ResponseEntity<?> update(@RequestBody Hospital hospital, @PathVariable (value = "hospitalId") UUID hospitalId){
         Hospital currentHospital = hospitalService.findOne(hospitalId);
         Hospital updatedHospital;

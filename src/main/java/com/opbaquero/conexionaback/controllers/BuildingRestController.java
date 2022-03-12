@@ -40,22 +40,26 @@ public class BuildingRestController {
     }
 
     @GetMapping("/all/{buildingId}")
+    @PreAuthorize("hasRole('ROLE_GESTOR')")
     public Building getBuilding(@PathVariable (value = "buildingId") UUID buildingId){
         return buildingService.findOne(buildingId);
     }
 
     @GetMapping("/all/account/{accountId}")
+    @PreAuthorize("hasRole('ROLE_GESTOR')")
     public List<Building> listByAccount(@PathVariable(value = "accountId")UUID accountId){
         return buildingService.fetchBuildingByIdWithHospitalWithAccount(accountId);
     }
 
     @GetMapping("/list/{hospitalId}")
+    @PreAuthorize("hasRole('ROLE_GESTOR')")
     public List<Building> listByHospital(@PathVariable (value = "hospitalId")Hospital hospitalId){
         return buildingService.findByHospital(hospitalId);
     }
 
     @PostMapping("/add/{hospitalId}")
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('ROLE_GESTOR')")
     public ResponseEntity<?> createBuilding(@PathVariable (value = "hospitalId") UUID hospitalId, @RequestBody Building buildingReq){
         Hospital hospital = hospitalService.findOne(hospitalId);
         Map<String, Object> response = new HashMap<>();
@@ -72,6 +76,7 @@ public class BuildingRestController {
 
     @PutMapping("add/{buildingId}")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasRole('ROLE_GESTOR')")
     public ResponseEntity<?> update(@RequestBody Building building, @PathVariable (value = "buildingId")UUID buildingId){
         Building currentBuilding = buildingService.findOne(buildingId);
         Building buildingUpdated = null;
@@ -95,6 +100,7 @@ public class BuildingRestController {
 
 
     @DeleteMapping("/add/{buildingId}")
+    @PreAuthorize("hasRole('ROLE_GESTOR')")
     public ResponseEntity<?> delete(@PathVariable (value = "buildingId") UUID buildingId){
         Map<String, Object> response = new HashMap<>();
         try{
