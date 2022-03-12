@@ -20,7 +20,8 @@ public interface IDeviceReadsDao extends JpaRepository<Read, UUID> {
             "FROM Read r " +
             "INNER JOIN r.wareHouseProduct wp " +
             "INNER JOIN wp.product p " +
-            "WHERE wp.warehouse = ?1")
+            "WHERE wp.warehouse = ?1 " +
+            "ORDER BY r.dateRead DESC")
     List<DeviceReadDTO> findReadsByWarehouseWithProductName(Warehouse warehouse);
 
 }
