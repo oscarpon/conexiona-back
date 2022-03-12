@@ -1,7 +1,9 @@
 package com.opbaquero.conexionaback.models.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.opbaquero.conexionaback.models.entity.Device;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -10,6 +12,7 @@ public class DeviceReadDTO {
 
     public UUID id;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     public LocalDateTime date_read;
 
     public String nameProduct;
