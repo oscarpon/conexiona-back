@@ -6,6 +6,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.*;
 
@@ -16,10 +17,10 @@ public class Account implements Serializable {
     @Id
     @GeneratedValue
     @Type(type="org.hibernate.type.UUIDCharType")
-    public UUID id;
+    private UUID id;
 
     @Column(nullable = false, name = "account_name")
-    public String accountName;
+    private String accountName;
 
     @OneToMany(mappedBy = "account", orphanRemoval = true)
     @Cascade(org.hibernate.annotations.CascadeType.DELETE)
