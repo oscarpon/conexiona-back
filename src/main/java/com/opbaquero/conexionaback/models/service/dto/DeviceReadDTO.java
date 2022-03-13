@@ -12,7 +12,7 @@ public class DeviceReadDTO {
 
     public UUID id;
 
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="dd-MM-yyyy HH:mm:ss")
     public LocalDateTime date_read;
 
     public String nameProduct;

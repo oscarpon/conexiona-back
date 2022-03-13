@@ -8,8 +8,11 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +20,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/accounts")
+@Validated
 public class AccountRestController {
     @Autowired
     public IAccountService accountService;
@@ -45,9 +49,9 @@ public class AccountRestController {
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<?> create(@RequestBody Account account){
+    public ResponseEntity<?> create(@Valid @RequestBody Account account){
         Map<String, Object> response = new HashMap<>();
-        if(accountService.existsByAccountName(account.accountName)){
+        if(accountService.existsByAccountName(account.getAccountName())){
             response.put("error", "Account name already exists");
             return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
         }

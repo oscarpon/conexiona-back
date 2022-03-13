@@ -70,7 +70,7 @@ public class UserService {
         List<User> listToret = new ArrayList<>();
 
         for(User u : listUsers){
-            if(u.getAccount().accountName != null){
+            if(u.getAccount().getAccountName() != null){
                 listToret.add(u);
             }
         }
